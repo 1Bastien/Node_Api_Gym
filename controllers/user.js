@@ -1,11 +1,23 @@
+const encryptPassword = require('../utils/encryptPassword');
+const decryptPassword = require('../utils/decryptPassword');
+
 async function userCreate(req, res) {
     try {
+        if (!req.body.password) {
+            return res.json("Pas de mot de passe");
+        }
+        const { token, salt, hash } = encryptPassword(req.body.password);
         const User = req.app.get("models").User;
+
         const NewUser = await new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             dateOfBirth: req.body.dateOfBirth,
+            token,
+            salt,
+            hash
         }).save();
+
         res.json(NewUser);
     } catch (error) {
         res.json(error.message);
@@ -36,7 +48,7 @@ async function userUpdate(req, res) {
             ToModifyUser[key] = req.body.toModify[key];
         }
         await ToModifyUser.save();
-        
+
         res.json(ToModifyUser);
     } catch (error) {
         res.json(error.message);
@@ -57,4 +69,23 @@ async function userDelete(req, res) {
     }
 };
 
-module.exports = { userGet, userCreate, userDelete, userUpdate };
+async function userLogin(req, res) {
+    try {
+        if(!req.body._id || !req.body.password) {
+            return res.json("_id ou mot de passe manquant");
+        }
+
+        const User = req.app.get("models").User;
+        const toVerifyUser = await User.findById(req.body._id);
+
+        if(!toVerifyUser) {
+            return "Pas d'utilisateur trouvé";
+        }
+
+        res.json(decryptPassword(toVerifyUser, req.body.password));
+    } catch (error) {
+        res.json(error.message);
+    }
+}
+
+module.exports = { userGet, userCreate, userDelete, userUpdate, userLogin };
