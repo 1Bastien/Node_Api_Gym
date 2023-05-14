@@ -26,8 +26,14 @@ async function coachCreate(req, res) {
 
 async function coaches(req, res) {
     const Coach = req.app.get("models").Coach;
-    const CoachesList = await Coach.find().populate("user");
-
+    let CoachesList;
+    if (req.query.discipline) {
+        CoachesList = await Coach.find({
+            discipline: req.query.discipline
+        }).populate("user");
+    } else {
+        CoachesList = await Coach.find().populate("user");
+    }
     res.json(CoachesList);
 }
 
