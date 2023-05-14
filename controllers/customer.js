@@ -69,15 +69,15 @@ async function customerDelete(req, res) {
     }
 
     const Customer = req.app.get("models").Customer;
+    const User = req.app.get("models").User;
 
     let toDeleteCustomer = await Customer.findById(req.body._id);
     if (!toDeleteCustomer) {
         return res.json('Customer not found');
     }
-    let toDeleteUser = await models.User.findById(toDeleteCustomer.user);
-
-    await toDeleteUser.delete();
-    await toDeleteCustomer.delete();
+    
+    await Customer.findByIdAndRemove(req.body._id);
+    await User.findByIdAndRemove(toDeleteCustomer.user);
 
     res.json("Utilisateur supprimé");
 };

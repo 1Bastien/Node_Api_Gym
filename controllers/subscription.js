@@ -1,5 +1,3 @@
-const { json } = require("express");
-
 async function subscriptions(req, res) {
     const subscription = req.app.get('models').Subscription;
     const subscriptionList = await subscription.find();
@@ -79,7 +77,7 @@ async function subscriptionDelete(req, res) {
     theCustomer.subscriptions.splice(toDeleteIndex, 1);
     await theCustomer.save();
 
-    await toDeleteSubscription.remove();
+    await Subscription.findByIdAndRemove(req.body._id);
 
     res.json("Supprimé");
 }

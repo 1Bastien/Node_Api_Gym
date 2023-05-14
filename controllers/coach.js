@@ -76,15 +76,15 @@ async function coachDelete(req, res) {
     }
 
     const Coach = req.app.get("models").Coach;
+    const User = req.app.get("models").User;
 
     let toDeleteCoach = await Coach.findById(req.body._id);
     if (!toDeleteCoach) {
         return res.json('Coach not found');
     }
-    let toDeleteUser = await models.User.findById(toDeleteCoach.user);
 
-    await toDeleteUser.deleteOne();
-    await toDeleteCoach.deleteOne();
+    await User.findByIdAndRemove(toDeleteCoach.user);
+    await Coach.findByIdAndRemove(toDeleteCoach);
 
     res.json("Utilisateur supprimé");
 };
