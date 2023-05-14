@@ -6,6 +6,11 @@ async function userCreate(req, res) {
         if (!req.body.password) {
             return res.json("Pas de mot de passe");
         }
+
+        if (req.role !== "manager") {
+            return res.json("Accès refusé");
+        }
+
         const { token, salt, hash } = encryptPassword(req.body.password);
         const User = req.app.get("models").User;
 
