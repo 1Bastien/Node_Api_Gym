@@ -4,4 +4,4 @@ const Coach = require("./coach");
 const Subscription = require("./subscription");
 const Slot = require("./slot");
 
-module.exports = { User, Customer, Coach, Subscription };
+module.exports = { User, Customer, Coach, Subscription, Slot };

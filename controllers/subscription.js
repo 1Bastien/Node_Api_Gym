@@ -19,7 +19,7 @@ async function subscriptionCreate(req, res) {
         customer: req.body.customer
     }).save();
 
-    let theCustomer = await models.customer.findById(treq.body.customer);
+    let theCustomer = await models.Customer.findById(req.body.customer);
     theCustomer.subscriptions.push(newSubscription._id);
     await theCustomer.save();
 

@@ -21,7 +21,7 @@ async function slotCreate(req, res) {
         customers: []
     }).save();
 
-    const theCoach = await models.Coach.findById(req.body.coach);
+    let theCoach = await models.Coach.findById(req.body.coach);
     theCoach.slots.push(newSlot._id);
     await theCoach.save();
 
@@ -104,7 +104,6 @@ async function slotBook(req, res) {
     }
 
     const theCustomer = await models.Customer.findById(req.body.customer).populate("subscriptions");
-
     let isSubscribed = false;
     for (const subscription of theCustomer.subscriptions) {
         if (subscription.beginninDate <= theSlot.Date &&
