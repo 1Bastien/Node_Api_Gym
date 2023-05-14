@@ -1,17 +1,17 @@
+const { customerCreate, customers, customerUpdate, customerDelete } = require('../controllers/customer');
+
 function customerRoute(app) {
-    app.post("/customerCreate", async (req, res) => {
-        const models = req.app.get("models");
-        const NewUser = await new models.User({
-            firstName: "test",
-            lastName: "test",
-            dateOfBirth: new Date(),
-            token: "",
-            salt: "",
-            hash: "",
-        }).save();
-        const newCustomer = await new models.Customer({user: NewUser._id}).save();
-        return res.json(newCustomer);
-    })
+    // Create
+    app.post("/customerCreate", customerCreate);
+
+    // Read
+    app.get("/customers", customers);
+
+    // Update
+    app.post("/customerUpdate", customerUpdate);
+
+    // Delete
+    app.delete("/customerDelete", customerDelete);
 }
 
 module.exports = customerRoute;
