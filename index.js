@@ -14,11 +14,13 @@ const app = express();
 app.set("models", models);
 
 const userRoute = require("./routes/user");
+const customerRoute = require("./routes/customer");
 
 app.use(express.json());
 app.use(getRoleMiddleware);
 
 userRoute(app);
+customerRoute(app);
 
 app.listen(3000, ()=> {
     console.log("serveur ok")

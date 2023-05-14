@@ -45,6 +45,10 @@ async function userUpdate(req, res) {
             return res.json("_id ou champ(s) manquant(s)");
         }
 
+        if (req.role !== "manager") {
+            return res.json("Accès refusé");
+        }
+
         const User = req.app.get("models").User;
         const ToModifyUser = await User.findById(req.body._id);
         const ToModifyKeys = Object.keys(req.body.toModify);
@@ -64,6 +68,10 @@ async function userDelete(req, res) {
     try {
         if (!req.body._id) {
             return res.json("_id manquant");
+        }
+
+        if (req.role !== "manager") {
+            return res.json("Accès refusé");
         }
 
         const User = req.app.get("models").User;
