@@ -17,7 +17,8 @@ async function coachCreate(req, res) {
         dateOfBirth: req.body.dateOfBirth,
         token,
         salt,
-        hash
+        hash,
+        role: "coach"
     }).save();
     const newCoach = await new models.Coach({ user: NewUser._id }).save();
 

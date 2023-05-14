@@ -26,7 +26,7 @@ async function customerCreate(req, res) {
 
 async function customers(req, res) {
     const Customer = req.app.get("models").Customer;
-    const CustomerList = await Customer.find().populate("user");
+    const CustomerList = await Customer.find().populate("user").populate("subscriptions");
 
     res.json(CustomerList);
 }
