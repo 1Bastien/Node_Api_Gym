@@ -87,7 +87,7 @@ async function slotDelete(req, res) {
     await theCoach.save();
 
     await Slot.findByIdAndRemove(req.body._id);
-    
+
     res.json("Supprimé");
 }
 
@@ -105,12 +105,10 @@ async function slotBook(req, res) {
 
     const theCustomer = await models.Customer.findById(req.body.customer).populate("subscriptions");
     let isSubscribed = false;
-    for (const subscription of theCustomer.subscriptions) {
-        if (subscription.beginninDate <= theSlot.Date &&
-            subscription.endDate >= theSlot.date
-        ) {
-            isSubscribed = true;
-        }
+    if (subscription.beginninDate <= theSlot.Date &&
+        subscription.endDate >= theSlot.date
+    ) {
+        isSubscribed = true;
     }
 
     if (isSubscribed) {
