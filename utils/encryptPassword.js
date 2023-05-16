@@ -7,7 +7,6 @@ function encryptPassword(password) {
     const salt = uid2(16);
     const hash = SHA256(salt + password).toString(encBase64);
 
-
     return { token, salt, hash };
 }
 
