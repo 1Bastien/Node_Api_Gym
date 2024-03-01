@@ -18,3 +18,22 @@ L'authentification est également mise en place.
 - **Gestion des coachs**
 - **Gestion des rendez-vous**
 - **Système d'authentification**
+
+## Installation
+
+```bash
+$ git clone https://github.com/1Bastien/Node_Api_Gym
+```
+```
+$ npm install
+```
+
+## Running the app
+
+```bash
+# development
+$ npm run start
+```
+```bash
+# watch mode
+$ npm run start:dev
